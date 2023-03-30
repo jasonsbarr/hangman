@@ -1,6 +1,7 @@
 import figlet from "figlet";
 import { input } from "@jasonsbarr/simple-io";
 import { help } from "../help.js";
+import { play } from "./play.js";
 
 export function start() {
   console.log(figlet.textSync("Welcome to Hangman!"));
@@ -12,6 +13,8 @@ export function start() {
 
     switch (direction) {
       case "P":
+        play();
+        break;
       case "H":
         help();
         break;
