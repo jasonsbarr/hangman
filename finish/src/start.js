@@ -14,6 +14,7 @@ export function start() {
       case "P":
       case "H":
         help();
+        break;
       case "Q":
         console.log(figlet.textSync("Goodbye!"));
         process.exit(0);
