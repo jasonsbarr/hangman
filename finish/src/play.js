@@ -29,6 +29,7 @@ export function play() {
     console.log(drawMan(gameState.guessesUsed));
     console.log();
     writeWordWithGuesses(gameState);
+    console.log();
     let guess = input("Guess a letter, or enter 'quit' to quit: ");
 
     if (guess === "quit") {
@@ -187,7 +188,7 @@ function isGameOver(gameState) {
 function endGame(gameState) {
   if (gameState.guessesUsed < MAX_GUESSES) {
     console.log(
-      `${gameState.word}! You won with ${MAX_GUESSES - gameState.guessesUsed} guesses left!`
+      `That's right, ${gameState.word}! You won with ${MAX_GUESSES - gameState.guessesUsed} guesses left!`
     );
   } else {
     console.log(`Sorry, you lost. The word was ${gameState.word}.`)
