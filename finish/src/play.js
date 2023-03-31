@@ -117,7 +117,7 @@ function getWord() {
   const words = readLines(
     path.join(fileURLToPath(import.meta.url), "../../data/words.txt")
   ).filter(word => word.length >= 5);
-  return words[randomInt(words.length)];
+  return words[randomInt(words.length - 1)];
 }
 
 /**
