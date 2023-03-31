@@ -1,6 +1,6 @@
 import figlet from "figlet";
 import { input } from "@jasonsbarr/simple-io";
-import { help } from "../help.js";
+import { help } from "./help.js";
 import { play } from "./play.js";
 
 export function start() {
@@ -11,7 +11,7 @@ export function start() {
   while (direction !== "Q") {
     direction = input("P for play, H for help, or Q for quit: ");
 
-    switch (direction) {
+    switch (direction.toUpperCase()) {
       case "P":
         play();
         break;
