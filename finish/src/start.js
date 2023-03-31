@@ -3,6 +3,9 @@ import { input } from "@jasonsbarr/simple-io";
 import { help } from "./help.js";
 import { play } from "./play.js";
 
+/**
+ * Starts the game and allows the player to choose their option
+ */
 export function start() {
   console.log(figlet.textSync("Welcome to Hangman!"));
   let direction = "";
