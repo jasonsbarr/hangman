@@ -186,7 +186,9 @@ function isGameOver(gameState) {
  */
 function endGame(gameState) {
   if (gameState.guessesUsed < MAX_GUESSES) {
-    console.log(`You won with ${MAX_GUESSES - gameState.guessesUsed} guesses left!`);
+    console.log(
+      `${gameState.word}! You won with ${MAX_GUESSES - gameState.guessesUsed} guesses left!`
+    );
   } else {
     console.log(`Sorry, you lost. The word was ${gameState.word}.`)
   }
