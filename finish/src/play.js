@@ -50,6 +50,68 @@ export function play() {
 }
 
 /**
+ * Gets random integer from 0 to top
+ * @param {number} top
+ * @returns {number}
+ */
+function randomInt(top) {
+  return Math.floor(Math.random() * top);
+}
+
+/**
+ * Get random word of at least 5 characters from data/words.txt
+ * @returns {string}
+ */
+function getWord() {
+  const words = readLines(
+    path.join(fileURLToPath(import.meta.url), "../../data/words.txt")
+  ).filter(word => word.length >= 5);
+  return words[randomInt(words.length - 1)];
+}
+
+/**
+ * Derives new GameState from guessed letter
+ * @param {string} guess letter guessed
+ * @param {GameState} gameState
+ * @returns {GameState}
+ */
+function guessLetter(guess, gameState) {
+  if (gameState.lettersGuessed.includes(guess)) {
+    return gameState;
+  }
+
+  let newState = { ...gameState, lettersGuessed: [ ...gameState.lettersGuessed, guess ] };
+  if (gameState.word.includes(guess)) {
+    return newState;
+  } else {
+    newState.guessesUsed++;
+    return newState;
+  }
+}
+
+/**
+ * Checks to see if game is over
+ * @param {GameState} gameState
+ * @returns {boolean}
+ */
+function isGameOver(gameState) {
+  if (gameState.guessesUsed >= MAX_GUESSES) {
+    return true;
+  }
+
+  let letters = [ ...new Set(gameState.word.split("")) ];
+  let correctGuesses = 0;
+
+  for (let guess of gameState.lettersGuessed) {
+    if (letters.includes(guess)) {
+      correctGuesses++;
+    }
+  }
+
+  return correctGuesses === letters.length;
+}
+
+/**
  * Draws the hangman
  * @param {number} used number of guesses used
  * @returns {string}
@@ -101,26 +163,6 @@ ______|______`;
 }
 
 /**
- * Gets random integer from 0 to top
- * @param {number} top
- * @returns {number}
- */
-function randomInt(top) {
-  return Math.floor(Math.random() * top);
-}
-
-/**
- * Get random word of at least 5 characters from data/words.txt
- * @returns {string}
- */
-function getWord() {
-  const words = readLines(
-    path.join(fileURLToPath(import.meta.url), "../../data/words.txt")
-  ).filter(word => word.length >= 5);
-  return words[randomInt(words.length - 1)];
-}
-
-/**
  * Draw correctly guessed letters with lines for unguessed letters
  * @param {GameState} gameState
  */
@@ -137,48 +179,6 @@ function writeWordWithGuesses(gameState) {
   }
 
   console.log(guessed);
-}
-
-/**
- * Derives new GameState from guessed letter
- * @param {string} guess letter guessed
- * @param {GameState} gameState
- * @returns {GameState}
- */
-function guessLetter(guess, gameState) {
-  if (gameState.lettersGuessed.includes(guess)) {
-    return gameState;
-  }
-
-  let newState = { ...gameState, lettersGuessed: [ ...gameState.lettersGuessed, guess ] };
-  if (gameState.word.includes(guess)) {
-    return newState;
-  } else {
-    newState.guessesUsed++;
-    return newState;
-  }
-}
-
-/**
- * Checks to see if game is over
- * @param {GameState} gameState
- * @returns {boolean}
- */
-function isGameOver(gameState) {
-  if (gameState.guessesUsed >= MAX_GUESSES) {
-    return true;
-  }
-
-  let letters = [ ...new Set(gameState.word.split("")) ];
-  let correctGuesses = 0;
-
-  for (let guess of gameState.lettersGuessed) {
-    if (letters.includes(guess)) {
-      correctGuesses++;
-    }
-  }
-
-  return correctGuesses === letters.length;
 }
 
 /**
